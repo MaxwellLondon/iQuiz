@@ -17,6 +17,10 @@
 		E34CAF1A2823172900FB672D /* iQuizUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34CAF192823172900FB672D /* iQuizUITests.swift */; };
 		E34CAF1C2823172900FB672D /* iQuizUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34CAF1B2823172900FB672D /* iQuizUITestsLaunchTests.swift */; };
 		E34CAF2F2827965000FB672D /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34CAF2E2827965000FB672D /* CustomCell.swift */; };
+		E34CAF35282DB8EC00FB672D /* QuizViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34CAF34282DB8EC00FB672D /* QuizViewCell.swift */; };
+		E34CAF37282DC3E300FB672D /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34CAF36282DC3E300FB672D /* QuizViewController.swift */; };
+		E34CAF3B282F420300FB672D /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34CAF3A282F420300FB672D /* AnswerViewController.swift */; };
+		E34CAF3D283023FC00FB672D /* FinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34CAF3C283023FC00FB672D /* FinishViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,10 @@
 		E34CAF192823172900FB672D /* iQuizUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iQuizUITests.swift; sourceTree = "<group>"; };
 		E34CAF1B2823172900FB672D /* iQuizUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iQuizUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E34CAF2E2827965000FB672D /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		E34CAF34282DB8EC00FB672D /* QuizViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewCell.swift; sourceTree = "<group>"; };
+		E34CAF36282DC3E300FB672D /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
+		E34CAF3A282F420300FB672D /* AnswerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
+		E34CAF3C283023FC00FB672D /* FinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +117,10 @@
 				E34CAF012823172900FB672D /* Assets.xcassets */,
 				E34CAF032823172900FB672D /* LaunchScreen.storyboard */,
 				E34CAF062823172900FB672D /* Info.plist */,
+				E34CAF34282DB8EC00FB672D /* QuizViewCell.swift */,
+				E34CAF36282DC3E300FB672D /* QuizViewController.swift */,
+				E34CAF3A282F420300FB672D /* AnswerViewController.swift */,
+				E34CAF3C283023FC00FB672D /* FinishViewController.swift */,
 			);
 			path = iQuiz;
 			sourceTree = "<group>";
@@ -262,7 +274,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E34CAEFD2823172800FB672D /* ViewController.swift in Sources */,
+				E34CAF3B282F420300FB672D /* AnswerViewController.swift in Sources */,
+				E34CAF35282DB8EC00FB672D /* QuizViewCell.swift in Sources */,
 				E34CAEF92823172800FB672D /* AppDelegate.swift in Sources */,
+				E34CAF37282DC3E300FB672D /* QuizViewController.swift in Sources */,
+				E34CAF3D283023FC00FB672D /* FinishViewController.swift in Sources */,
 				E34CAF2F2827965000FB672D /* CustomCell.swift in Sources */,
 				E34CAEFB2823172800FB672D /* SceneDelegate.swift in Sources */,
 			);

@@ -32,7 +32,14 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("you tapped me")
+        let selectedCell = tableView.cellForRow(at: indexPath) as! CustomCell
+        print(selectedCell.cellLabel.text!)
+        
+        let story = storyboard?.instantiateViewController(identifier: "quiz") as! QuizViewController
+        
+        story.selectedQuiz = selectedCell.cellLabel.text!
+        story.modalPresentationStyle = .fullScreen
+        present(story, animated: true)
     }
 }
 
@@ -51,7 +58,5 @@ extension ViewController: UITableViewDataSource {
         
         return cell
     }
-    
-    
 }
 
