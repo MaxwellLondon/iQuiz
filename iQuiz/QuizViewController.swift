@@ -13,68 +13,125 @@ class QuizViewController: UIViewController {
     var selectedAnswer = "N/A"
     var currentQuestion: Int = 0
     var currentCorrect = 0
+    var amountOfQuestions = 0
     
     @IBOutlet var questionLabel: UILabel!
     
-    let mathQuestions = ["What is 1+1", "What is 5x5?", "What is 4x6"]
-    let marvelQuestions = ["Who is spiderman?", "What year did the first spiderman come out?", "How many marvel movies are there?"]
-    let scienceQuestions = ["As you go down into a well, your weight: ", "Multiple Choice: Bees must collect nectar from approximately how many flowers to make 1 pound of honeycomb? Is it", "Albacore is a type of: "]
+    //Math, Marvel, Science
+    var questionAmount: [Int] = [0, 0, 0]
     
-    let mathAnswers = [["2", "7", "10", "5"], ["30", "40", "25", "10"], ["80", "90", "70", "24"]]
-    let marvelAnswers = [["a spider", "a villan", "a marvel character", "spidey"], ["2001", "2002", "2003", "2004"], ["21", "22", "23", "24"]]
-    let scienceAnswers = [["increases slightly", "decreases slightly", "stays the same", "increases drastically"], ["10 thousand", "2 mil", "20 mil", "50 mil"], ["shell fish", "tuna", "marble", "metoroid"]]
-    let correctMath = ["2", "25", "24"]
-    let correctMarvel = ["spidey", "2002", "23"]
-    let correctScience = ["decreases slightly", "2 mil", "tuna"]
+    var mathQuestions: [String] = []
+    var marvelQuestions: [String] = []
+    var scienceQuestions: [String] = []
+    
+    var mathAnswers: [[String]] = []
+    var marvelAnswers: [[String]] = []
+    var scienceAnswers: [[String]] = []
+    var correctMath: [String] = []
+    var correctMarvel: [String] = []
+    var correctScience: [String] = []
+    
+    
+    
+    struct WelcomeElement: Codable {
+        let title, desc: String
+        let questions: [Question]
+    }
+    
+    struct Question: Codable {
+        let text, answer: String
+        let answers: [String]
+    }
+    
+    typealias Welcome = [WelcomeElement]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        
+        let questions = FileManager.default.contents(atPath: dir!.path + "/response.txt")
+        
+        do {
+            let result = try JSONDecoder().decode(Welcome.self, from: questions!)
+            
+            for quiz in result {
+                let questions = quiz.questions
+                let quiz = quiz.title
+                for question in questions {
+                    switch quiz {
+                    case "Science!":
+                        scienceQuestions.append(question.text)
+                        scienceAnswers.append(question.answers)
+                        correctScience.append(question.answer)
+                        questionAmount[0] += 1
+                    case "Marvel Super Heroes":
+                        marvelQuestions.append(question.text)
+                        marvelAnswers.append(question.answers)
+                        correctMarvel.append(question.answer)
+                        questionAmount[1] += 1
+                    case "Mathematics":
+                        mathQuestions.append(question.text)
+                        mathAnswers.append(question.answers)
+                        correctMath.append(question.answer)
+                        questionAmount[2] += 1
+                    default:
+                        print("something went wrong")
+                    }
+                }
+            }
+        } catch {
+            print(error)
+        }
+        print(mathAnswers)
     }
+    
     
     @IBOutlet var tableView: UITableView!
     
     @IBAction func showAnswer(_ sender: Any) {
         let story = storyboard?.instantiateViewController(identifier: "answer") as! AnswerViewController
-
+        
         story.currentQuestion = currentQuestion
         story.selectedQuiz = self.selectedQuiz
         
+        
         switch selectedQuiz{
         case "Mathematics":
-            story.correctAnswerText = correctMath[currentQuestion]
+            story.correctAnswerText = "Correct Anwser: " + mathAnswers[currentQuestion][Int(correctMath[currentQuestion])! - 1]
             story.selectedQuestionText = "Question: " + mathQuestions[currentQuestion]
             
-            if(selectedAnswer == correctMath[currentQuestion]){
+            if(selectedAnswer == mathAnswers[currentQuestion][Int(correctMath[currentQuestion])! - 1]){
                 story.correctnessOutputText  = "Correct, nice job!"
                 currentCorrect += 1
             } else {
                 story.correctnessOutputText  = "Incorrect, better luck next time"
             }
-            story.correctAnswerText = "Correct Anwser: " + correctMath[currentQuestion]
+            story.amountOfQuestions = questionAmount[0]
         case "Marvel Super Heroes":
-            story.correctAnswerText = correctMarvel[currentQuestion]
+            story.correctAnswerText = "Correct Anwser: " + marvelAnswers[currentQuestion][Int(correctMarvel[currentQuestion])! - 1]
             story.selectedQuestionText = "Question: " + marvelQuestions[currentQuestion]
             
-            if(selectedAnswer == correctMarvel[currentQuestion]){
+            if(selectedAnswer == marvelAnswers[currentQuestion][Int(correctMarvel[currentQuestion])! - 1]){
                 story.correctnessOutputText  = "Correct, nice job!"
                 currentCorrect += 1
             } else {
                 story.correctnessOutputText  = "Incorrect, better luck next time"
             }
-            story.correctAnswerText = "Correct Anwser: " + correctMarvel[currentQuestion]
-        case "Science":
-            story.correctAnswerText = correctScience[currentQuestion]
+            story.amountOfQuestions = questionAmount[1]
+        case "Science!":
+            story.correctAnswerText = "Correct Anwser: " + scienceAnswers[currentQuestion][Int(correctScience[currentQuestion])! - 1]
             story.selectedQuestionText = "Question: " + scienceQuestions[currentQuestion]
             
-            if(selectedAnswer == correctScience[currentQuestion]){
+            if(selectedAnswer == scienceAnswers[currentQuestion][Int(correctScience[currentQuestion])! - 1]){
                 story.correctnessOutputText  = "Correct, nice job!"
                 currentCorrect += 1
             } else {
                 story.correctnessOutputText  = "Incorrect, better luck next time"
             }
-            story.correctAnswerText = "Correct Anwser: " + correctScience[currentQuestion]
+            story.amountOfQuestions = questionAmount[2]
         default:
             print("An invalid quiz category was selected")
         }
@@ -110,7 +167,7 @@ extension QuizViewController: UITableViewDataSource {
         case "Marvel Super Heroes":
             cell.quizTextLabel.text = marvelAnswers[currentQuestion][indexPath.row]
             questionLabel.text = marvelQuestions[currentQuestion]
-        case "Science":
+        case "Science!":
             cell.quizTextLabel.text = scienceAnswers[currentQuestion][indexPath.row]
             questionLabel.text = scienceQuestions[currentQuestion]
         default:

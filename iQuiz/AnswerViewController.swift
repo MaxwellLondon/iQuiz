@@ -15,14 +15,20 @@ class AnswerViewController: UIViewController {
     var correctAnswerText = "-1"
     var currentQuestion: Int = 0
     var currentCorrect = 0
+    var amountOfQuestions = 0
     
     @IBAction func nextQuestion(_ sender: Any) {
         let story = storyboard?.instantiateViewController(identifier: "quiz") as! QuizViewController
         
         story.currentCorrect = self.currentCorrect
-        
         story.selectedQuiz = self.selectedQuiz
-        if(currentQuestion < 2){
+       
+        print(currentQuestion)
+        
+        
+        print(String(currentQuestion) + "current")
+        print(String(amountOfQuestions) + "amount")
+        if(currentQuestion < amountOfQuestions - 1){
             story.currentQuestion = currentQuestion + 1
             story.modalPresentationStyle = .fullScreen
             present(story, animated: true)
